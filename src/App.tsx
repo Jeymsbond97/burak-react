@@ -1,51 +1,11 @@
 import React from 'react';
 import './css/app.css';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { HomePage } from './app/screens/homePage';
 import { ProductsPage } from './app/screens/productsPage';
 import { OrdersPage } from './app/screens/ordersPage';
 import { UserPage } from './app/screens/userPage';
 
-
-// function App() {
-//   return (
-//     <Router>
-//       <div>
-//         <nav>
-//           <ul>
-//             <li>
-//               <Link to="/">HomePage</Link>
-//             </li>
-//             <li>
-//               <Link to="/products">Productspage</Link>
-//             </li>
-//             <li>
-//               <Link to="/orders">OrdersPage</Link>
-//             </li>
-//             <li>
-//               <Link to="/member-page">UserPage</Link>
-//             </li>
-//           </ul>
-//         </nav>
-
-//         <Switch>
-//           <Route path="/products">
-//             <ProductsPage />
-//           </Route>
-//           <Route path="/orders">
-//             <OrdersPage />
-//           </Route>
-//           <Route path="/member-page">
-//             <UserPage />
-//           </Route>
-//           <Route path="/">
-//             <HomePage />
-//           </Route>
-//         </Switch>
-//       </div>
-//     </Router>
-//   );
-// }
 
 function App() {
   return (
@@ -57,7 +17,7 @@ function App() {
               <Link to="/">HomePage</Link>
             </li>
             <li>
-              <Link to="/products">ProductsPage</Link>
+              <Link to="/products">Productspage</Link>
             </li>
             <li>
               <Link to="/orders">OrdersPage</Link>
@@ -68,16 +28,56 @@ function App() {
           </ul>
         </nav>
 
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/member-page" element={<UserPage />} />
-        </Routes>
+        <Switch>
+          <Route path="/products">
+            <ProductsPage />
+          </Route>
+          <Route path="/orders">
+            <OrdersPage />
+          </Route>
+          <Route path="/member-page">
+            <UserPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );
 }
+
+// function App() {
+//   return (
+//     <Router>
+//       <div>
+//         <nav>
+//           <ul>
+//             <li>
+//               <Link to="/">HomePage</Link>
+//             </li>
+//             <li>
+//               <Link to="/products">ProductsPage</Link>
+//             </li>
+//             <li>
+//               <Link to="/orders">OrdersPage</Link>
+//             </li>
+//             <li>
+//               <Link to="/member-page">UserPage</Link>
+//             </li>
+//           </ul>
+//         </nav>
+
+//         <Routes>
+//           <Route path="/" element={<HomePage />} />
+//           <Route path="/products" element={<ProductsPage />} />
+//           <Route path="/orders" element={<OrdersPage />} />
+//           <Route path="/member-page" element={<UserPage />} />
+//         </Routes>
+//       </div>
+//     </Router>
+//   );
+// }
 
 
 export default App;
