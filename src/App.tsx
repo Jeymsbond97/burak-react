@@ -47,37 +47,4 @@ function App() {
   );
 }
 
-// function App() {
-//   return (
-//     <Router>
-//       <div>
-//         <nav>
-//           <ul>
-//             <li>
-//               <Link to="/">HomePage</Link>
-//             </li>
-//             <li>
-//               <Link to="/products">ProductsPage</Link>
-//             </li>
-//             <li>
-//               <Link to="/orders">OrdersPage</Link>
-//             </li>
-//             <li>
-//               <Link to="/member-page">UserPage</Link>
-//             </li>
-//           </ul>
-//         </nav>
-
-//         <Routes>
-//           <Route path="/" element={<HomePage />} />
-//           <Route path="/products" element={<ProductsPage />} />
-//           <Route path="/orders" element={<OrdersPage />} />
-//           <Route path="/member-page" element={<UserPage />} />
-//         </Routes>
-//       </div>
-//     </Router>
-//   );
-// }
-
-
 export default App;
