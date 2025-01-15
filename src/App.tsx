@@ -1,33 +1,23 @@
 import React from 'react';
 import './css/app.css';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom';
 import { HomePage } from './app/screens/homePage';
 import { ProductsPage } from './app/screens/productsPage';
 import { OrdersPage } from './app/screens/ordersPage';
 import { UserPage } from './app/screens/userPage';
+import { HomeNavbar } from './app/components/headers/HomeNavbar';
+import { OtherNavbar } from './app/components/headers/OtherNavbar';
+import { Footer } from './app/components/footer';
 
 
 function App() {
+
+  const location = useLocation()
+  console.log("location:", location)
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">HomePage</Link>
-            </li>
-            <li>
-              <Link to="/products">Productspage</Link>
-            </li>
-            <li>
-              <Link to="/orders">OrdersPage</Link>
-            </li>
-            <li>
-              <Link to="/member-page">UserPage</Link>
-            </li>
-          </ul>
-        </nav>
-
+      <>
+       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar/>}
         <Switch>
           <Route path="/products">
             <ProductsPage />
@@ -42,7 +32,8 @@ function App() {
             <HomePage />
           </Route>
         </Switch>
-      </div>
+        <Footer/>
+      </>
     </Router>
   );
 }
