@@ -5,7 +5,7 @@ import { plans } from "../../../libs/data/plans";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-    export default function Events() {
+export default function Events() {
     return (
         <div className={"events-frame"}>
         <Stack className={"events-main"}>
@@ -35,7 +35,7 @@ SwiperCore.use([Autoplay, Navigation, Pagination]);
                 return (
                 <SwiperSlide key={number} className={"events-info-frame"}>
                     <div className={"events-img"}>
-                    <img src={value.img} className={"events-img"} alt=""/>
+                    <img src={value.img} className={"events-img"} alt="" />
                     </div>
                     <Box className={"events-desc"}>
                     <Box className={"events-bott"}>
@@ -43,7 +43,7 @@ SwiperCore.use([Autoplay, Navigation, Pagination]);
                         <div className={"event-title-speaker"}>
                             <strong>{value.title}</strong>
                             <div className={"event-organizator"}>
-                            <img src={"/icons/speaker.svg"} alt=""/>
+                            <img src={"/icons/speaker.svg"} alt="" />
                             <p className={"spec-text-author"}>{value.author}</p>
                             </div>
                         </div>
@@ -52,11 +52,11 @@ SwiperCore.use([Autoplay, Navigation, Pagination]);
 
                         <div className={"bott-info"}>
                             <div className={"bott-info-main"}>
-                            <img src={"/icons/calendar.svg"} alt=""/>
+                            <img src={"/icons/calendar.svg"} alt="" />
                             {value.date}
                             </div>
                             <div className={"bott-info-main"}>
-                            <img src={"/icons/location.svg"} alt=""/>
+                            <img src={"/icons/location.svg"} alt="" />
                             {value.location}
                             </div>
                         </div>
