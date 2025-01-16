@@ -19,7 +19,7 @@ function App() {
   console.log("location:", location)
   return (
       <>
-       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
+        {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
         <Switch>
           <Route path="/products">
             <ProductsPage />
