@@ -6,7 +6,6 @@ import Tabs from "@mui/material/Tabs"
 import PausedOrders from "./PausedOrders"
 import FinishedOrders from "./FinishedOrders";
 import ProcessOrders from "./ProcessOrders";
-import LocationOnIcon from  "@mui/icons-material/LocationOn"
 import "../../../css/order.css"
 
 
