@@ -7,11 +7,11 @@ export default function ProcessOrders() {
     return (
     <TabPanel value={"2"}>
     <Stack>
-        {[1].map((ele, index) => {
+        {[1,2].map((ele, index) => {
         return (
         <Box key={index} className="order-main-box">
         <Box className="order-box-scroll">
-            {[1].map((ele2, index2) => {
+            {[1,2].map((ele2, index2) => {
             return (
             <Box key={index2} className="orders-name-price">
             <img
@@ -35,12 +35,12 @@ export default function ProcessOrders() {
             <Box className="box-total">
                 <p>Product price</p>
                 <p>$60</p>
-                <img src={"/icons/plus.svg"} style={{ marginLeft: "0px" }} alt="" />
+                <img src={"/icons/plus.svg"} style={{ marginLeft: "12px" }} alt="" />
                 <p>delivery cost</p>
                 <p>$5</p>
                 <img
                 src={"/icons/pause.svg"}
-                style={{ marginLeft: "0px" }} alt=""
+                style={{ marginLeft: "12px" }} alt=""
                 />
                 <p>Total</p>
                 <p>$65</p>

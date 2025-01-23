@@ -66,14 +66,10 @@ export default function OrdersPage() {
                 <Box className="location">
                   <div className="location-address">
                     <img src="/icons/location.svg" alt="" />
-                    <span className="spes-address-txt"> South Korea </span>
+                    <span className="spes-address-txt"> South Korea, Jeonju </span>
                   </div>
                 </Box>
             </Box>
-            <Box >
-
-            </Box>
-
           </Stack>
         </Container>
     </div>
