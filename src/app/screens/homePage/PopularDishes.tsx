@@ -9,28 +9,39 @@ import CardOverflow from '@mui/joy/CardOverflow';
 import  DescriptionOutlinedIcon  from "@mui/icons-material/DescriptionOutlined";
 import  VisibilityIcon from "@mui/icons-material/Visibility"
 
+import { useSelector } from "react-redux";
+import {createSelector} from "reselect";
+import { retrievePopularDishes } from "./selector";
+import { Product } from "../../../libs/types/product";
+import { ProductCollection } from "../../../libs/enums/product.enum";
+import { serverApi } from "../../../libs/config";
 
-const list = [
-    {productName: "Lavash", imagePath: '/img/lavash.webp'},
-    {productName: "Cutlet", imagePath: '/img/cutlet.webp'},
-    {productName: "Kebab", imagePath: '/img/kebab.webp'},
-    {productName: "Kebab", imagePath: '/img/kebab-fresh.webp'}
-]
 
+
+
+/**  REDUX SLICE & SELECTOR  **/
+const popularDishesRetriever = createSelector(
+    retrievePopularDishes,
+    (popularDishes) => ({popularDishes}),
+)
 export default function  PopularDishes() {
+    const { popularDishes } = useSelector(popularDishesRetriever);
+
+    console.log("popularDishes:", popularDishes);
     return (
         <div className="popular-dishes-frame">
             <Container>
                 <Stack className="popular-section">
                     <Box className="category-title">Popular Dishes</Box>
                     <Stack className="cards-frame">
-                        {list.map((ele, index) => {
+                        {popularDishes.map((ele: Product) => {
+                            const imagePath = `${serverApi}/${ele.productImages[0]}`
                             return (
-                                <CssVarsProvider key={index}>
+                                <CssVarsProvider key={ele._id}>
                                     <Card className="card">
                                         <CardCover>
                                             <img
-                                            src={ele.imagePath}
+                                            src={imagePath}
                                             alt=""
                                             />
                                         </CardCover>
