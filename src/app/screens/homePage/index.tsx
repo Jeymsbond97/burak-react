@@ -22,10 +22,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 
 export default function HomePage() {
   const { setPopularDishes } = actionDispatch(useDispatch());
-  // Selector: Store => Data;
 
   useEffect(() => {
-    // Backend server data request => Data
     const product = new ProductService();
     product.getProducts({
       page: 1,

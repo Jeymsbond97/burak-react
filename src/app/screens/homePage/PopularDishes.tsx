@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import {createSelector} from "reselect";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../libs/types/product";
-import { ProductCollection } from "../../../libs/enums/product.enum";
 import { serverApi } from "../../../libs/config";
 
 
@@ -34,7 +33,7 @@ export default function  PopularDishes() {
                 <Stack className="popular-section">
                     <Box className="category-title">Popular Dishes</Box>
                     <Stack className="cards-frame">
-                        {popularDishes.map((ele: Product) => {
+                        { popularDishes.length !== 0 ? ( popularDishes.map((ele: Product) => {
                             const imagePath = `${serverApi}/${ele.productImages[0]}`
                             return (
                                 <CssVarsProvider key={ele._id}>
@@ -57,7 +56,7 @@ export default function  PopularDishes() {
                                                     alignItems: "center",
                                                     display: "flex"
                                                 }} >
-                                                    20
+                                                    {ele.productViews}
                                                     <VisibilityIcon sx={{fontSize: 25, marginLeft: "5px"}} />
                                                 </Typography>
                                             </Stack>
@@ -71,13 +70,15 @@ export default function  PopularDishes() {
                                             height: "60px"
                                         }}>
                                             <Typography startDecorator={<DescriptionOutlinedIcon/>} textColor={"neutral.300"}>
-                                                This is delicious meal
+                                                {ele.productDesc}
                                             </Typography>
                                         </CardOverflow>
                                     </Card>
                                 </CssVarsProvider>
                             )
-                        })}
+                        })  ): (
+                            <Box className="no-data">Popular products are not available</Box>
+                        )}
                     </Stack>
                 </Stack>
             </Container>
