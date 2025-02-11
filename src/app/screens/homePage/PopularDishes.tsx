@@ -14,8 +14,7 @@ import {createSelector} from "reselect";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../libs/types/product";
 import { serverApi } from "../../../libs/config";
-
-
+import { ProductCollection } from "../../../libs/enums/product.enum";
 
 
 /**  REDUX SLICE & SELECTOR  **/
@@ -25,8 +24,6 @@ const popularDishesRetriever = createSelector(
 )
 export default function  PopularDishes() {
     const { popularDishes } = useSelector(popularDishesRetriever);
-
-    console.log("popularDishes:", popularDishes);
     return (
         <div className="popular-dishes-frame">
             <Container>
