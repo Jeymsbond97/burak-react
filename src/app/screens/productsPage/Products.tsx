@@ -1,7 +1,7 @@
 import  MonetizationOnIcon  from "@mui/icons-material/MonetizationOn"
 import RemoveRedEyeIcon from  "@mui/icons-material/RemoveRedEye"
 import { Container, Stack, Box, Button} from "@mui/material"
-import React from "react"
+import React, { useEffect } from "react"
 import Pagination from "@mui/material/Pagination"
 import PaginationItem from "@mui/material/PaginationItem"
 import Badge from "@mui/material/Badge"
@@ -16,6 +16,9 @@ import { Product } from "../../../libs/types/product"
 import { setProducts } from "./slice"
 import { retrieveProducts } from "./selector"
 import { createSelector } from "reselect"
+import ProductService from "../../services/ProductService"
+import { ProductCollection } from "../../../libs/enums/product.enum"
+import { serverApi } from "../../../libs/config"
 
 /**  REDUX SLICE & SELECTOR  **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -27,16 +30,24 @@ const productsRetriever = createSelector(
     (products) => ({products}),
 )
 
-const  products = [
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-]
 
-export default  function Products() {
+export default function Products() {
+const {setProducts} = actionDispatch(useDispatch());
+const {products} = useSelector(productsRetriever);
+
+useEffect(() => {
+    const product = new ProductService()
+    product.getProducts( {
+        page: 1,
+        limit: 8,
+        order: "createdAt",
+        productCollection: ProductCollection.DISH,
+        search: " ",
+    })
+    .then((date) => setProducts(date))
+    .catch((err) => console.log(err))
+}, [])
+
     return (
         <div className="products">
             <Container>
@@ -92,17 +103,21 @@ export default  function Products() {
 
                         <Stack className="product-wrapper">
                         {products.length !== 0 ? (
-                            products.map((product, index) => {
+                            products.map((product: Product) => {
+                                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                                const sizeVolume = product.productCollection === ProductCollection.DRINK
+                                ? product.productVolume + " litre"
+                                : product.productSize + " size";
                                 return (
-                                    <Stack key={index} className="product-card">
-                                        <Stack className="product-img" sx={{background: `url(${product.imagePath})`}}>
-                                            <div className="product-sale">Large size</div>
+                                    <Stack key={product._id} className="product-card">
+                                        <Stack className="product-img" sx={{background: `url(${imagePath})`}}>
+                                            <div className="product-sale">{sizeVolume}</div>
                                             <Button className="shop-btn">
                                                 <img src={"/icons/shopping-cart.svg"} alt="" style={{display:"flex"}} />
                                             </Button>
                                             <Button className="view-btn" sx={{right: "40px"}}>
-                                                <Badge badgeContent ={20} color="secondary">
-                                                    <RemoveRedEyeIcon sx ={{color: 20 > 0 ? "gray" : "white",}} />
+                                                <Badge badgeContent ={product.productViews} color="secondary">
+                                                    <RemoveRedEyeIcon sx ={{color: product.productViews === 0 ? "gray" : "white",}} />
                                                 </Badge>
                                             </Button>
                                         </Stack>
@@ -112,7 +127,7 @@ export default  function Products() {
                                             </span>
                                             <div className="product-desc">
                                                 <MonetizationOnIcon/>
-                                                {12}
+                                                {product.productPrice}
                                             </div>
                                         </Box>
                                     </Stack>
