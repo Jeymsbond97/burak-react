@@ -35,11 +35,12 @@ export default function NewDishes() {
                 {newDishes.length !== 0 ? (
                     newDishes.map((ele: Product) => {
                         const imagePath = `${serverApi}/${ele.productImages[0]}`
-                       // const sizeVoleme = ele.productCollection === ProductCollection.DRINK ? ele.productVolume + "l" : ele.productSize + " size";
+                        const sizeVoleme = ele.productCollection === ProductCollection.DRINK
+                        ? ele.productVolume + "l" : ele.productSize + " size";
                     return (
                         <Card key={ele._id} variant="outlined" className={"card"}>
                         <CardOverflow>
-                            <div className="product-sale">Normal Size</div>
+                            <div className="product-sale">{sizeVoleme}</div>
                             <AspectRatio ratio={"1"}>
                             <img src={imagePath} alt="" />
                             </AspectRatio>
