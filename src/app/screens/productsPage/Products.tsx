@@ -10,16 +10,30 @@ import ArrowForwardIcon from  "@mui/icons-material/ArrowForward"
 import SearchIcon from  "@mui/icons-material/Search"
 
 
+import { useDispatch, useSelector} from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { Product } from "../../../libs/types/product"
+import { setProducts } from "./slice"
+import { retrieveProducts } from "./selector"
+import { createSelector } from "reselect"
+
+/**  REDUX SLICE & SELECTOR  **/
+const actionDispatch = (dispatch: Dispatch) => ({
+    setProducts: (data: Product[]) => dispatch(setProducts(data))
+});
+
+const productsRetriever = createSelector(
+    retrieveProducts,
+    (products) => ({products}),
+)
 
 const  products = [
     {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Kebab", imagePath: "img/kebab-fresh.webp"},
-    {productName: "Kebab", imagePath: "img/kebab.webp"},
-    {productName: "Lavash", imagePath: "img/lavash.webp"},
-    {productName: "Lavash", imagePath: "img/lavash.webp"},
     {productName: "Cutlet", imagePath: "img/cutlet.webp"},
-    {productName: "Kebab", imagePath: "img/kebab.webp"},
-    {productName: "Kebab", imagePath: "img/kebab-fresh.webp"},
+    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
+    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
+    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
+    {productName: "Cutlet", imagePath: "img/cutlet.webp"},
 ]
 
 export default  function Products() {
