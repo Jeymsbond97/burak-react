@@ -13,6 +13,10 @@ import "./css/navbar.css";
 import "./css/footer.css"
 import useBasket from './app/hooks/useBasket';
 import AuthenticationModal from './app/components/auth';
+import { sweetErrorHandling, sweetTopSuccessAlert } from './libs/sweetAlert';
+import { Messages } from './libs/config';
+import MemberService from './app/services/MemberService';
+import { useGlobals } from './app/hooks/useGlobals';
 
 
 function App() {
@@ -21,11 +25,32 @@ function App() {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
   const [signupOpen, setSignupOpen] = useState<boolean>(false);
   const [loginOpen, setLoginOpen] = useState<boolean>(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const {setAuthMember } = useGlobals();
 
   /**   HANDLERS   **/
 
   const handleSignupClose = () => setSignupOpen(false);
   const handleLoginClose = () => setLoginOpen(false);
+
+  const handleLogoutClick = (e: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleCloseLogout = () => setAnchorEl(null);
+
+  const handleLogoutRequest = async () => {
+    try{
+      const member = new MemberService();
+      await member.logout();
+      await sweetTopSuccessAlert("success", 700);
+      setAuthMember(null);
+    }catch(err){
+      console.log(err);
+      sweetErrorHandling(Messages.error1);
+    }
+  }
+
   return (
       <>
         {location.pathname === "/" ? <HomeNavbar
@@ -36,6 +61,10 @@ function App() {
           onAdd={onAdd}
           setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
+          handleCloseLogout ={handleCloseLogout}
+          anchorEl ={anchorEl}
+          handleLogoutClick ={handleLogoutClick }
+          handleLogoutRequest ={handleLogoutRequest}
           />
           : <OtherNavbar
           cartItems={cartItems}
@@ -45,6 +74,10 @@ function App() {
           onAdd={onAdd}
           setSignupOpen={setSignupOpen}
           setLoginOpen={setLoginOpen}
+          handleCloseLogout ={handleCloseLogout}
+          anchorEl ={anchorEl}
+          handleLogoutClick ={handleLogoutClick }
+          handleLogoutRequest ={handleLogoutRequest}
           />}
         <Switch>
           <Route path="/products">
