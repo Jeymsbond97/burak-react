@@ -12,13 +12,20 @@ import './css/app.css';
 import "./css/navbar.css";
 import "./css/footer.css"
 import useBasket from './app/hooks/useBasket';
+import AuthenticationModal from './app/components/auth';
 
 
 function App() {
 
   const location = useLocation();
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
+  const [signupOpen, setSignupOpen] = useState<boolean>(false);
+  const [loginOpen, setLoginOpen] = useState<boolean>(false);
 
+  /**   HANDLERS   **/
+
+  const handleSignupClose = () => setSignupOpen(false);
+  const handleLoginClose = () => setLoginOpen(false);
   return (
       <>
         {location.pathname === "/" ? <HomeNavbar
@@ -53,6 +60,13 @@ function App() {
           </Route>
         </Switch>
         <Footer/>
+
+        <AuthenticationModal
+          signupOpen={signupOpen}
+          loginOpen={loginOpen}
+          handleSignupClose={handleSignupClose}
+          handleLoginClose={handleLoginClose}
+          />
       </>
   );
 }
