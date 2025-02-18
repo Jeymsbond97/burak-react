@@ -1,6 +1,6 @@
 import axios from "axios";
 import { serverApi } from "../../libs/config";
-import { Member } from "../../libs/types/member";
+import { Member, MemberInput } from "../../libs/types/member";
 
 
 class MemberService {
@@ -34,6 +34,21 @@ class MemberService {
         }
         catch(err){
             console.log("Error, getRestaurant", err)
+            throw err;
+        }
+    }
+
+    public async signup(input: MemberInput): Promise<Member> {
+        try{
+            const url = this.path + "/member/signup";
+            const result = await axios.post(url, input, {withCredentials: true});
+            console.log("resultSingup:", result);
+            const member : Member = result.data.member;
+            console.log("Member =>:", member);
+            localStorage.setItem("memberData", JSON.stringify(member));
+            return member;
+        }catch(err){
+            console.log("Error, Signup", err)
             throw err;
         }
     }

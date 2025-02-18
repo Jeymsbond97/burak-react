@@ -9,10 +9,12 @@ interface HomeNavbarProps {
     onRemove: (item: CartItem) => void;
     onDelete: (item: CartItem) => void;
     onDeleteAll: () => void;
+    setSignupOpen: (isOpen: boolean) => void;
+    setLoginOpen: (isOpen: boolean) => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-    const { cartItems, onDelete, onRemove, onDeleteAll, onAdd } = props;
+    const { cartItems, onDelete, onRemove, onDeleteAll, onAdd, setLoginOpen, setSignupOpen } = props;
     const authMember = null;
 
     return (
@@ -63,7 +65,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                             />
                         {!authMember ? (
                             <Box>
-                                <Button variant="contained" className="login-button">Login</Button>
+                                <Button
+                                    variant="contained"
+                                    className="login-button"
+                                    onClick={() => setLoginOpen(true)}
+                                    >
+                                        Login
+                                    </Button>
                             </Box>
                         ) : (
                             <img className="user-avatar" src={"/icons/default-user.svg"} alt="" aria-haspopup={"true"}/>
@@ -83,7 +91,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                     </Box>
                     <Box className="signup">
                         {!authMember ? (
-                            <Button variant="contained" className="signup-button" >SIGN UP</Button>
+                            <Button
+                                variant="contained"
+                                className="signup-button"
+                                onClick={() => setSignupOpen(true)}
+                                >
+                                    SIGN UP
+                                </Button>
                         ) : null}
                     </Box>
                 </Stack>

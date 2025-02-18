@@ -34,6 +34,8 @@ function App() {
           onRemove={onRemove}
           onDeleteAll={onDeleteAll}
           onAdd={onAdd}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
           />
           : <OtherNavbar
           cartItems={cartItems}
@@ -41,6 +43,8 @@ function App() {
           onRemove={onRemove}
           onDeleteAll={onDeleteAll}
           onAdd={onAdd}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
           />}
         <Switch>
           <Route path="/products">
