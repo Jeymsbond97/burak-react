@@ -5,10 +5,14 @@ import { CartItem } from "../../../libs/types/search";
 
 interface HomeNavbarProps {
     cartItems: CartItem[];
+    onAdd: (item: CartItem) => void;
+    onRemove: (item: CartItem) => void;
+    onDelete: (item: CartItem) => void;
+    onDeleteAll: () => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarProps) {
-    const { cartItems } = props;
+    const { cartItems, onDelete, onRemove, onDeleteAll, onAdd } = props;
     const authMember = null;
 
     return (
@@ -50,7 +54,13 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                             Help
                             </NavLink>
                         </Box>
-                        <Basket cartItems={cartItems}/>
+                        <Basket
+                            cartItems={cartItems}
+                            onDelete={onDelete}
+                            onRemove={onRemove}
+                            onDeleteAll={onDeleteAll}
+                            onAdd={onAdd}
+                            />
                         {!authMember ? (
                             <Box>
                                 <Button variant="contained" className="login-button">Login</Button>
@@ -77,11 +87,11 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                         ) : null}
                     </Box>
                 </Stack>
-                <Stack className="logo-frame">
-                    <div className="logo-img"></div>
+                    <Stack className="logo-frame">
+                        <div className="logo-img"></div>
+                    </Stack>
                 </Stack>
-            </Stack>
-          </Container>
+            </Container>
         </div>
     )
 }
