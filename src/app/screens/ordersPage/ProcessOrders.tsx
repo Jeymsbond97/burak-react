@@ -1,8 +1,6 @@
-import React from "react";
 import moment from "moment";
 import TabPanel from "@mui/lab/TabPanel";
 import { Box, Button, Stack } from "@mui/material";
-
 import { useSelector } from "react-redux";
 import {createSelector} from "reselect";
 import { retrieveProcessOrders} from "./selector";
@@ -127,7 +125,7 @@ const finishOrderHandler = async (e: T) => {
     </TabPanel>
     );
 }
-function setOrderBuilder(arg0: Date) {
-    throw new Error("Function not implemented.");
-}
+// function setOrderBuilder(arg0: Date) {
+//     throw new Error("Function not implemented.");
+// }
 

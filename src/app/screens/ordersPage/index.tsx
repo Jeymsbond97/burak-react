@@ -110,6 +110,28 @@ export default function OrdersPage() {
                   </div>
                 </Box>
             </Box>
+            <Stack className="order-cards">
+              <Stack className="order-main-card">
+                <Box className="full-card">
+                  <input type="number"  placeholder="Card number 5432 2323 1221 5654"/>
+                </Box>
+                <Box className="half-card">
+                  <input type="date"  placeholder="Card number 5432 2323 1221 5654"/>
+                  <input type="number"  placeholder="CVV: 123"/>
+                </Box>
+                <Box className="full-card">
+                  <input type="text"  placeholder="Enter Your Full Name"/>
+                </Box>
+                <Box className="cards-img">
+                  <div className="card-img">
+                    <img src="/icons/western-card.svg" alt="" />
+                    <img src="/icons/master-card.svg" alt="" />
+                    <img src="/icons/paypal-card.svg" alt="" />
+                    <img src="/icons/visa-card.svg" alt="" />
+                  </div>
+                </Box>
+              </Stack>
+            </Stack>
           </Stack>
         </Container>
     </div>
