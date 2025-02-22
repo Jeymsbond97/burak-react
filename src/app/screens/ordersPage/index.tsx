@@ -110,8 +110,8 @@ export default function OrdersPage() {
                   </div>
                 </Box>
             </Box>
-            <Stack className="order-cards">
-              <Stack className="order-main-card">
+            <Box className="order-cards">
+              <Box className="order-main-card">
                 <Box className="full-card">
                   <input type="number"  placeholder="Card number 5432 2323 1221 5654"/>
                 </Box>
@@ -130,8 +130,8 @@ export default function OrdersPage() {
                     <img src="/icons/visa-card.svg" alt="" />
                   </div>
                 </Box>
-              </Stack>
-            </Stack>
+              </Box>
+            </Box>
           </Stack>
         </Container>
     </div>
