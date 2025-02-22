@@ -295,7 +295,7 @@
 .order-page .order-cards{
     width: 360px;
     height: 260px;
-    margin-top: -40px;
+    margin-top: 40px;
     margin-left: 865px;
     display: flex;
     flex-direction: column;
