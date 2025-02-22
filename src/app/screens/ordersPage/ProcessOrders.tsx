@@ -6,18 +6,58 @@ import { Box, Button, Stack } from "@mui/material";
 import { useSelector } from "react-redux";
 import {createSelector} from "reselect";
 import { retrieveProcessOrders} from "./selector";
-import { serverApi } from "../../../libs/config";
-import { Order, OrderItem } from "../../../libs/types/order";
+import { Messages, serverApi } from "../../../libs/config";
+import { Order, OrderItem, OrderUpdateInput } from "../../../libs/types/order";
 import { Product } from "../../../libs/types/product";
+import { sweetErrorHandling } from "../../../libs/sweetAlert";
+import OrderService from "../../services/OrderService";
+import { OrderStatus } from "../../../libs/enums/order.enum";
+import { T } from "../../../libs/types/common";
+import { useGlobals } from "../../hooks/useGlobals";
 
 /**  REDUX SLICE & SELECTOR  **/
 const processOrdersRetriever = createSelector(
     retrieveProcessOrders,
     (processOrders) => ({processOrders}),
-)
+);
 
-export default function ProcessOrders() {
+interface FinishOrdersProps {
+    setValue: (input: string) => void;
+}
+
+export default function ProcessOrders(props: FinishOrdersProps) {
+    const { setValue } = props;
+    const {authMember, setOrderBuilder} = useGlobals()
     const { processOrders} = useSelector(processOrdersRetriever);
+
+
+     /**   HANDLER   **/
+
+const finishOrderHandler = async (e: T) => {
+    try{
+        if(!authMember) throw new Error(Messages.error2);
+        const orderId = e.target.value;
+        const input: OrderUpdateInput = {
+            orderId: orderId,
+            orderStatus: OrderStatus.FINISH,
+        };
+
+        const confirmation = window.confirm("Have you received your order?");
+        if(confirmation){
+            const order = new OrderService();
+            await order.updateOrder(input);
+
+            // FORWARD FINISH
+            setValue("3");
+            setOrderBuilder(new Date());
+
+        }
+    }
+    catch(err){
+        console.log(err);
+        sweetErrorHandling(err).then();
+    }
+};
 
     return (
     <TabPanel value={"2"}>
@@ -67,7 +107,7 @@ export default function ProcessOrders() {
             <p className="data-compl">
             {moment().format("YY-MM-DD HH:mm")}
             </p>
-            <Button variant="contained" className="verify-button-process">
+            <Button value={order._id} onClick={finishOrderHandler} variant="contained" className="verify-button-process">
                 Verify to Fulfil
             </Button>
         </Box>
@@ -87,3 +127,7 @@ export default function ProcessOrders() {
     </TabPanel>
     );
 }
+function setOrderBuilder(arg0: Date) {
+    throw new Error("Function not implemented.");
+}
+

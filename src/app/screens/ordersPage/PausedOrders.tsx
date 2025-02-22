@@ -6,18 +6,87 @@ import Button from "@mui/material/Button";
 import { useSelector } from "react-redux";
 import {createSelector} from "reselect";
 import { retrievePausedOrders} from "./selector";
-import { serverApi } from "../../../libs/config";
-import { Order, OrderItem } from "../../../libs/types/order";
+import { Messages, serverApi } from "../../../libs/config";
+import { Order, OrderItem, OrderUpdateInput } from "../../../libs/types/order";
 import { Product } from "../../../libs/types/product";
+import { sweetErrorHandling } from "../../../libs/sweetAlert";
+import { T } from "../../../libs/types/common";
+import { useGlobals } from "../../hooks/useGlobals";
+import { OrderStatus } from "../../../libs/enums/order.enum";
+import OrderService from "../../services/OrderService";
 
 /**  REDUX SLICE & SELECTOR  **/
 const pausedOrdersRetriever = createSelector(
     retrievePausedOrders,
     (pausedOrders) => ({pausedOrders}),
-)
+);
 
-export default function PausedOrders() {
-    const { pausedOrders} = useSelector(pausedOrdersRetriever)
+interface ProcessOrdersProps {
+    setValue: (input: string) => void;
+}
+
+
+export default function PausedOrders(props: ProcessOrdersProps) {
+    const { setValue } = props;
+    const { pausedOrders} = useSelector(pausedOrdersRetriever);
+    const {authMember, setOrderBuilder} = useGlobals();
+
+    /**   HANDLER   **/
+
+const deleteOrderHandler = async (e: T) => {
+    try{
+        if(!authMember) throw new Error(Messages.error2);
+        const orderId = e.target.value;
+        const input: OrderUpdateInput = {
+            orderId: orderId,
+            orderStatus: OrderStatus.DELETE,
+        };
+
+        const confirmation = window.confirm("Do you want to delete the order?");
+        if(confirmation){
+            const order = new OrderService();
+            await order.updateOrder(input);
+
+            // REBUILD
+            setOrderBuilder(new Date());
+
+        }
+    }
+    catch(err){
+        console.log(err);
+        sweetErrorHandling(err).then();
+    }
+};
+
+const processOrderHandler = async (e: T) => {
+    try{
+        if(!authMember) throw new Error(Messages.error2);
+        //PAYMENT PROCESS
+
+        const orderId = e.target.value;
+        const input: OrderUpdateInput = {
+            orderId: orderId,
+            orderStatus: OrderStatus.PROCESS,
+        };
+
+        const confirmation = window.confirm("Do you want to proceed with payment?");
+        if(confirmation){
+            const order = new OrderService();
+            await order.updateOrder(input);
+
+            // FORWARD PROCESS
+            setValue("2");
+            setOrderBuilder(new Date());
+
+        }
+    }
+    catch(err){
+        console.log(err);
+        sweetErrorHandling(err).then();
+    }
+};
+
+
     return (
         <TabPanel value={"1"}>
             <Stack>
@@ -63,10 +132,22 @@ export default function PausedOrders() {
                                     <p>Total</p>
                                     <p>${order.orderTotal}</p>
                                 </Box>
-                                <Button variant="contained" color="secondary" className="cancel-button">
+                                <Button
+                                    value={order._id}
+                                    variant="contained"
+                                    color="secondary"
+                                    className="cancel-button"
+                                    onClick={deleteOrderHandler}
+                                    >
                                         CANCEL
                                 </Button>
-                                <Button variant="contained"  color="success" className="pay-button">
+                                <Button
+                                    value={order._id}
+                                    variant="contained"
+                                    color="success"
+                                    className="pay-button"
+                                    onClick={processOrderHandler}
+                                    >
                                         PAYMENT
                                 </Button>
                             </Box>
