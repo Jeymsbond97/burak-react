@@ -6,11 +6,25 @@ import Tabs from "@mui/material/Tabs"
 import PausedOrders from "./PausedOrders"
 import FinishedOrders from "./FinishedOrders";
 import ProcessOrders from "./ProcessOrders";
-import "../../../css/order.css"
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+import "../../../css/order.css";
+import { Order } from "../../../libs/types/order";
 
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
 
 export default function OrdersPage() {
+  const {setFinishedOrders, setPausedOrders, setProcessOrders}
+  = actionDispatch(useDispatch())
   const [value, setValue] = useState('1')
+
+
+  /**     HANDLER   **/
 
   const handleChange = (e: SyntheticEvent, newValue: string) =>{
     setValue(newValue);

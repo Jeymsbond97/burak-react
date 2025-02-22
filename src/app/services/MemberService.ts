@@ -42,7 +42,6 @@ class MemberService {
         try{
             const url = this.path + "/member/signup";
             const result = await axios.post(url, input, {withCredentials: true});
-            console.log("resultSingup:", result);
             const member : Member = result.data.member;
             console.log("Member =>:", member);
             localStorage.setItem("memberData", JSON.stringify(member));
